@@ -7,21 +7,31 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour
 {
     [SerializeField] float rcsThrust = 10f;
-    [SerializeField] const float boostThrust = 60f;
+    [SerializeField] float boostThrust = 60f;
     [SerializeField] float rcsThrustIncrease = 45f;
-    [SerializeField] const float maxBoostVelocity = 10f;   
+    [SerializeField] float maxBoostVelocity = 10f;
+    
+    [SerializeField] AudioClip audioDie;
     Rigidbody rigidBody;
+    //[SerializeField]
     AudioSource thrusterSound;
+    //AudioSource playAudio;
     float rcsExtraThrust = 0f;
     float thrustExtraForce = 0f;
     float thrustExtraForceX = 0f;
+    Rocket_State playerState;
+    enum Rocket_State { alive, dead };
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-        thrusterSound = GetComponent<AudioSource>();
+        if (thrusterSound == null)
+        {
+            thrusterSound = GetComponent<AudioSource>();
+        }
+        playerState = Rocket_State.alive;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -30,9 +40,12 @@ public class Rocket : MonoBehaviour
 
     private void ProcessInput()
     {
-        Thrust();
-        Rotate();
-        ResetRotation();
+        if (playerState != Rocket_State.dead)
+        {
+            Thrust();
+            Rotate();
+        }
+        //ResetRotation();
     }
 
     float Max(params float[] values)
@@ -50,36 +63,40 @@ public class Rocket : MonoBehaviour
         return num1 >= 0 && num2 >= 0 || num1 < 0 && num2 < 0;
     }
 
-    private void Thrust()
+    private void ExtraThrust()
     {
-        //print(rigidBody.velocity);
-        
         var maxDirectionalVelocity = Max(rigidBody.GetRelativePointVelocity(Vector3.zero).y);
         var maxDirectionalVelocityX = Max(rigidBody.GetRelativePointVelocity(Vector3.zero).x, -rigidBody.GetRelativePointVelocity(Vector3.zero).x);
         //print(maxDirectionalVelocityX + "<->" + rigidBody.GetRelativePointVelocity(Vector3.zero).x);
 
 
-        if (maxBoostVelocity > maxDirectionalVelocity) thrustExtraForce = maxBoostVelocity-maxDirectionalVelocity;
+        if (maxBoostVelocity > maxDirectionalVelocity) thrustExtraForce = maxBoostVelocity - maxDirectionalVelocity;
         else thrustExtraForce = 0;
 
-        if (maxBoostVelocity*2 > maxDirectionalVelocityX) thrustExtraForceX = maxBoostVelocity*2-maxDirectionalVelocityX;
+        if (maxBoostVelocity * 2 > maxDirectionalVelocityX) thrustExtraForceX = maxBoostVelocity * 2 - maxDirectionalVelocityX;
         else thrustExtraForceX = 0;
         //print("dir: " + thrustExtraForceX);
 
         int angle = (int)rigidBody.rotation.eulerAngles.z;
-        
+
         angle = angle - (angle / 360) * 360;
         if (angle < 0) angle = angle + 360;
         var quadrant = (angle / 90) % 4;
         //var positive = (quadrant == 3 || quadrant == 2);
         //if (positive) print(angle);
-        
-        if (!(sameSign((quadrant==3||quadrant==2)?1:-1, rigidBody.GetRelativePointVelocity(Vector3.zero).x)) || (int)maxDirectionalVelocityX == 0)
+
+        if (!(sameSign((quadrant == 3 || quadrant == 2) ? 1 : -1, rigidBody.GetRelativePointVelocity(Vector3.zero).x)) || (int)maxDirectionalVelocityX == 0)
         {
-            thrustExtraForceX = maxBoostVelocity*2;
+            thrustExtraForceX = maxBoostVelocity * 2;
             //if ((int)maxDirectionalVelocityX != 0) print("quad: " + quadrant); 
         }
+    }
 
+
+    private void Thrust()
+    {
+        //print(rigidBody.velocity);
+        ExtraThrust();
 
         float forcePerFrame = (boostThrust * thrustExtraForce) * Time.deltaTime;
         float forcePerFrameX = (boostThrust * thrustExtraForceX) * Time.deltaTime;
@@ -88,11 +105,9 @@ public class Rocket : MonoBehaviour
             //print("up: " + forcePerFrame);
             
             rigidBody.AddForce((Vector3.up*forcePerFrame * Mathf.Cos(rigidBody.rotation.eulerAngles.z * 0.01745329251f)) + (Vector3.left * forcePerFrameX * Mathf.Sin(rigidBody.rotation.eulerAngles.z * 0.01745329251f)));
-            //rigidBody.
-            //rigidBody.transform.
-            if (!thrusterSound.isPlaying)
+
+            if (!thrusterSound.isPlaying && playerState == Rocket_State.alive)
             {
-                //print("euler: " + transform.rotation.eulerAngles.z);
                 thrusterSound.Play();
             }
  
@@ -103,13 +118,39 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    private void ResetRotation()
+
+    void OnCollisionEnter(Collision collision)
     {
-        //if (Math.Abs(rigidBody.rotation.x) > 0.002)
-        //{
-            
-        //}
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                print("You and me together we'll be forewver you'll see");
+                break;
+            case "Fuel":
+                break;
+            case "Finnish":
+                break;
+            default:
+                print("dead");
+                if (playerState != Rocket_State.dead)
+                {
+                    Invoke("DeadlySound", 0.05f);
+                    
+                }
+                break;
+        }
     }
+
+    void DeadlySound()
+    {
+        playerState = Rocket_State.dead;
+        thrusterSound.Stop();
+        thrusterSound.PlayOneShot(audioDie);
+        //thrusterSound.Stop();
+
+        // audioDie.PlayOneShot();
+    }
+
     private void Rotate()
     {
         
