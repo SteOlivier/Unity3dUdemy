@@ -12,6 +12,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] float maxBoostVelocity = 10f;
     
     [SerializeField] AudioClip audioDie;
+    [SerializeField] AudioClip victoryClip;
     Rigidbody rigidBody;
     //[SerializeField]
     AudioSource thrusterSound;
@@ -124,11 +125,15 @@ public class Rocket : MonoBehaviour
         switch (collision.gameObject.tag)
         {
             case "Friendly":
-                print("You and me together we'll be forewver you'll see");
+                print("You and me together we'll be forever you'll see");
                 break;
             case "Fuel":
                 break;
             case "Finnish":
+                if (playerState != Rocket_State.dead)
+                {
+                    Invoke("Victory", 1.5f);
+                }
                 break;
             default:
                 print("dead");
@@ -139,6 +144,13 @@ public class Rocket : MonoBehaviour
                 }
                 break;
         }
+    }
+    void Victory()
+    {
+        thrusterSound.Stop();
+        rigidBody.freezeRotation = true;
+        rigidBody.Sleep();
+        thrusterSound.PlayOneShot(victoryClip);
     }
 
     void DeadlySound()

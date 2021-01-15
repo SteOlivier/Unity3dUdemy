@@ -777,6 +777,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Finnish
       objectReference: {fileID: 0}
+    - target: {fileID: 7584709673748711544, guid: 321f1636e15cbc24cb77adb94d169884,
+        type: 3}
+      propertyPath: m_TagString
+      value: Finnish
+      objectReference: {fileID: 0}
     - target: {fileID: 7629497624060251750, guid: 321f1636e15cbc24cb77adb94d169884,
         type: 3}
       propertyPath: m_RootOrder
