@@ -21,7 +21,7 @@ public class Rocket : MonoBehaviour
     float thrustExtraForce = 0f;
     float thrustExtraForceX = 0f;
     Rocket_State playerState;
-    enum Rocket_State { alive, dead };
+    enum Rocket_State { alive, dead, victory };
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +41,7 @@ public class Rocket : MonoBehaviour
 
     private void ProcessInput()
     {
-        if (playerState != Rocket_State.dead)
+        if (playerState == Rocket_State.alive)
         {
             Thrust();
             Rotate();
@@ -130,8 +130,10 @@ public class Rocket : MonoBehaviour
             case "Fuel":
                 break;
             case "Finnish":
+                print("Vic");
                 if (playerState != Rocket_State.dead)
                 {
+                    print("Tor");
                     Invoke("Victory", 1.5f);
                 }
                 break;
@@ -147,9 +149,11 @@ public class Rocket : MonoBehaviour
     }
     void Victory()
     {
+        playerState = Rocket_State.victory;
+        print("ry");
         thrusterSound.Stop();
         rigidBody.freezeRotation = true;
-        rigidBody.Sleep();
+        //rigidBody.Sleep();
         thrusterSound.PlayOneShot(victoryClip);
     }
 

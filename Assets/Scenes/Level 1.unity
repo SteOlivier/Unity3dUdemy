@@ -559,6 +559,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 691352497, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
+      propertyPath: victoryClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 511fbe87aa7b4124ba584e2dfebf28b3, type: 3}
     - target: {fileID: 7533560530008752902, guid: b4e3fe504d5f5de45a65941944885586,
         type: 3}
       propertyPath: m_Name
@@ -795,7 +799,7 @@ PrefabInstance:
     - target: {fileID: 7629497624060251750, guid: 321f1636e15cbc24cb77adb94d169884,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.5474
+      value: 7.646536
       objectReference: {fileID: 0}
     - target: {fileID: 7629497624060251750, guid: 321f1636e15cbc24cb77adb94d169884,
         type: 3}
@@ -810,7 +814,7 @@ PrefabInstance:
     - target: {fileID: 7629497624060251750, guid: 321f1636e15cbc24cb77adb94d169884,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.87
+      value: -0.65
       objectReference: {fileID: 0}
     - target: {fileID: 7629497624060251750, guid: 321f1636e15cbc24cb77adb94d169884,
         type: 3}
