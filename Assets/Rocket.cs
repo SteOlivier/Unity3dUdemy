@@ -32,6 +32,7 @@ public class Rocket : MonoBehaviour
             thrusterSound = GetComponent<AudioSource>();
         }
         playerState = Rocket_State.alive;
+        SceneToLoad = SceneManager.GetActiveScene().buildIndex;
     }
     
     // Update is called once per frame
@@ -157,11 +158,11 @@ public class Rocket : MonoBehaviour
         //rigidBody.Sleep();
         thrusterSound.PlayOneShot(victoryClip);
         SceneToLoad = 1;
-        Invoke("NextScene", 3f);
+        Invoke("NextScene", 6f);
     }
     void NextScene()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneToLoad);
     }
 
     void DeadlySound()
@@ -169,7 +170,7 @@ public class Rocket : MonoBehaviour
         playerState = Rocket_State.dead;
         thrusterSound.Stop();
         thrusterSound.PlayOneShot(audioDie);
-        SceneToLoad = 0;
+        //SceneToLoad = 0;
         Invoke("NextScene", 3f);
         //thrusterSound.Stop();
 
