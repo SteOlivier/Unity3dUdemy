@@ -13,6 +13,11 @@ public class Rocket : MonoBehaviour
     
     [SerializeField] AudioClip audioDie;
     [SerializeField] AudioClip victoryClip;
+
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem deathParticles;
+
     Rigidbody rigidBody;
     //[SerializeField]
     AudioSource thrusterSound;
@@ -112,12 +117,14 @@ public class Rocket : MonoBehaviour
             if (!thrusterSound.isPlaying && playerState == Rocket_State.alive)
             {
                 thrusterSound.Play();
+                mainEngineParticles.Play();
             }
  
         }
         else
         {
             thrusterSound.Stop();
+            mainEngineParticles.Stop();
         }
     }
 
@@ -157,8 +164,14 @@ public class Rocket : MonoBehaviour
         rigidBody.freezeRotation = true;
         //rigidBody.Sleep();
         thrusterSound.PlayOneShot(victoryClip);
+        PlayVIctoryParticles();
+        Invoke("PlayVIctoryParticles", 3.5f);
         SceneToLoad = 1;
         Invoke("NextScene", 6f);
+    }
+    void PlayVIctoryParticles()
+    {
+        successParticles.Play();
     }
     void NextScene()
     {
@@ -168,6 +181,7 @@ public class Rocket : MonoBehaviour
     void DeadlySound()
     {
         playerState = Rocket_State.dead;
+        deathParticles.Play();
         thrusterSound.Stop();
         thrusterSound.PlayOneShot(audioDie);
         //SceneToLoad = 0;
@@ -176,6 +190,7 @@ public class Rocket : MonoBehaviour
 
         // audioDie.PlayOneShot();
     }
+    
 
     private void Rotate()
     {

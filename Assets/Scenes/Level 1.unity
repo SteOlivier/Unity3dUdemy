@@ -121,24 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &512540940 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6609018200353886014, guid: 3b6071eeccdcf014ba5be96117b599f6,
-    type: 3}
-  m_PrefabInstance: {fileID: 6609018201311699535}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &512540944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512540940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3c001ee654a0045a685bfbbf1441f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &632766918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -559,10 +541,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 691352497, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
-      propertyPath: victoryClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 511fbe87aa7b4124ba584e2dfebf28b3, type: 3}
+    - target: {fileID: 4100699649168470, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4100699649168470, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4100699649168470, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4100699649168470, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4100699649168470, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4100699649168470, guid: b4e3fe504d5f5de45a65941944885586, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7533560530008752902, guid: b4e3fe504d5f5de45a65941944885586,
         type: 3}
       propertyPath: m_Name
