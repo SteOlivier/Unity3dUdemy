@@ -10,6 +10,7 @@ public class Rocket : MonoBehaviour
     [SerializeField] float boostThrust = 60f;
     [SerializeField] float rcsThrustIncrease = 45f;
     [SerializeField] float maxBoostVelocity = 10f;
+    [SerializeField] float levelLoadDelay = 6f;
     
     [SerializeField] AudioClip audioDie;
     [SerializeField] AudioClip victoryClip;
@@ -167,7 +168,7 @@ public class Rocket : MonoBehaviour
         PlayVIctoryParticles();
         Invoke("PlayVIctoryParticles", 3.5f);
         SceneToLoad += 1;
-        Invoke("NextScene", 6f);
+        Invoke("NextScene", levelLoadDelay);
     }
     void PlayVIctoryParticles()
     {
