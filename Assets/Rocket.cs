@@ -166,7 +166,7 @@ public class Rocket : MonoBehaviour
         thrusterSound.PlayOneShot(victoryClip);
         PlayVIctoryParticles();
         Invoke("PlayVIctoryParticles", 3.5f);
-        SceneToLoad = 1;
+        SceneToLoad += 1;
         Invoke("NextScene", 6f);
     }
     void PlayVIctoryParticles()
