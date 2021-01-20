@@ -39,6 +39,7 @@ public class Rocket : MonoBehaviour
         }
         playerState = Rocket_State.alive;
         SceneToLoad = SceneManager.GetActiveScene().buildIndex;
+        //print(SceneToLoad);
     }
     
     // Update is called once per frame
@@ -141,7 +142,7 @@ public class Rocket : MonoBehaviour
                 break;
             case "Finnish":
                 //print("Vic");
-                if (playerState != Rocket_State.dead)
+                if (playerState == Rocket_State.alive)
                 {
                     //print("Tor");
                     Invoke("Victory", 1.5f);
@@ -149,7 +150,7 @@ public class Rocket : MonoBehaviour
                 break;
             default:
                 //print("dead");
-                if (playerState != Rocket_State.dead)
+                if (playerState == Rocket_State.alive)
                 {
                     Invoke("DeadlySound", 0.05f);
                     
@@ -159,26 +160,26 @@ public class Rocket : MonoBehaviour
     }
     void Victory()
     {
+        if (playerState != Rocket_State.victory)
+        {
+            SceneToLoad += 1;
+        }
         playerState = Rocket_State.victory;
-        //print("ry");
         thrusterSound.Stop();
         rigidBody.freezeRotation = true;
-        //rigidBody.Sleep();
         thrusterSound.PlayOneShot(victoryClip);
         PlayVIctoryParticles();
         Invoke("PlayVIctoryParticles", 3.5f);
-        SceneToLoad += 1;
         Invoke("NextScene", levelLoadDelay);
     }
     void PlayVIctoryParticles()
     {
-        successParticles.Play();
+        successParticles.Play(); 
     }
     void NextScene()
-    {
+    {        
         SceneManager.LoadScene(SceneToLoad);
     }
-
     void DeadlySound()
     {
         playerState = Rocket_State.dead;
