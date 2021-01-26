@@ -27,6 +27,8 @@ public class Rocket : MonoBehaviour
     float thrustExtraForce = 0f;
     float thrustExtraForceX = 0f;
     int SceneToLoad = 0;
+    RocketZY aNewDimension = null;
+    //bool touchedVictoryPlate = false;
     Rocket_State playerState;
     enum Rocket_State { alive, dead, victory };
     // Start is called before the first frame update
@@ -39,12 +41,14 @@ public class Rocket : MonoBehaviour
         }
         playerState = Rocket_State.alive;
         SceneToLoad = SceneManager.GetActiveScene().buildIndex;
+        aNewDimension = GetComponent<RocketZY>();
         //print(SceneToLoad);
     }
     
     // Update is called once per frame
     void Update()
     {
+        if (aNewDimension != null && aNewDimension.Enabled == true) return;
         ProcessInput();
     }
 
@@ -145,6 +149,10 @@ public class Rocket : MonoBehaviour
                 if (playerState == Rocket_State.alive)
                 {
                     //print("Tor");
+                    if(aNewDimension != null && aNewDimension.Enabled == false)
+                    {
+                        collision.gameObject.tag = "Friendly";
+                    }
                     Invoke("Victory", 1.5f);
                 }
                 break;
@@ -162,6 +170,11 @@ public class Rocket : MonoBehaviour
     {
         if (playerState != Rocket_State.victory)
         {
+            if (aNewDimension != null && aNewDimension.Enabled == false)
+            {
+                aNewDimension.Enabled = true;
+                return;
+            }
             SceneToLoad += 1;
         }
         playerState = Rocket_State.victory;
