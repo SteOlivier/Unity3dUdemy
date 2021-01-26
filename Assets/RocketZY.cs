@@ -8,7 +8,7 @@ public class RocketZY : MonoBehaviour
     [SerializeField] bool MoveCameraOnEnable = false;
     [SerializeField] Vector3 CameraTransformOnEnable = Vector3.zero;
     [SerializeField] Vector3 CameraRotationOnEnable = Vector3.zero;
-    [SerializeField] float Z_DepthIncrease = 8;
+    [SerializeField] float Z_DepthIncrease = 14;
 
 
     [SerializeField] float rcsThrust = 10f;

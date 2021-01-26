@@ -5,7 +5,9 @@ using UnityEngine;
 public class MusicPlayer : MonoBehaviour
 {
     private AudioSource audioSource;
-    [SerializeField] int repeatTimes = 2;
+   // [SerializeField] int repeatTimes = 2;
+    [SerializeField] List<AudioClip> audioClips = new List<AudioClip>();
+    int currentlyPlaying = 0;
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -17,14 +19,13 @@ public class MusicPlayer : MonoBehaviour
     }
     void Update()
     {
-        if (audioSource.isPlaying && repeatTimes <= 0)
+        //if (audioSource.isPlaying && repeatTimes <= 0)
+        //{
+        //    audioSource.Stop();
+        //}
+        if (!audioSource.isPlaying && audioClips.Count > currentlyPlaying)
         {
-            audioSource.Stop();
-        }
-        else if (!audioSource.isPlaying && repeatTimes > 0)
-        {
-            audioSource.Play();
-            repeatTimes--;
+            audioSource.PlayOneShot(audioClips[currentlyPlaying++]);
         }
     }
 }

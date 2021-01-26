@@ -198,7 +198,9 @@ public class Rocket : MonoBehaviour
         playerState = Rocket_State.dead;
         deathParticles.Play();
         thrusterSound.Stop();
+        //thrusterSound.volume = 0.5f;
         thrusterSound.PlayOneShot(audioDie);
+        thrusterSound.volume = 0.15f;
         //SceneToLoad = 0;
         Invoke("NextScene", 3f);
         //thrusterSound.Stop();
