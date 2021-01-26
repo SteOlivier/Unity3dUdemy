@@ -25,7 +25,10 @@ public class MusicPlayer : MonoBehaviour
         //}
         if (!audioSource.isPlaying && audioClips.Count > currentlyPlaying)
         {
-            audioSource.PlayOneShot(audioClips[currentlyPlaying++]);
+            audioSource.clip = audioClips[currentlyPlaying++];
+            audioSource.Play();
+            // Is playing only checks for the default audio source
+            //audioSource.PlayOneShot(audioClips[currentlyPlaying++]);
         }
     }
 }
